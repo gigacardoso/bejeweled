@@ -29,7 +29,7 @@ Canvas.prototype.resetBoard = function() {
 	for (var i = 0; i < SIZE; i++) {
 		table += "<tr>\n";
 		for (var j = 0; j < SIZE; j++) {
-			table += "<td></td>\n";
+			table += "<td style=\"background-color:white\"></td>\n";
 		}
 		table += "</tr>\n";
 	}
@@ -60,6 +60,7 @@ Canvas.prototype.drawBoard = function(grid) {
 		for (var j = 0; j < SIZE; j++) {
 			var img = image(IMG_DIR + grid[i][j].type.icon);
 			this.getCell(i, j).html(img);
+			this.getCell(i,j)[0].style.backgroundColor = "white";
 		}
 	}
 };
@@ -105,9 +106,14 @@ Canvas.prototype.swapJewels = function(x, y) {
 	console.log(x + " " + y);
 	if (this.a == null) {
 		this.a = board.grid[x][y];
+		this.getCell(x,y)[0].style.backgroundColor = "red";
 	} else if (this.a != null && this.b == null) {
+		this.getCell(x,y)[0].style.backgroundColor = "red";
 		this.b = board.grid[x][y];
 		board.swapJewels(this.a, this.b);
+		
+		this.getCell(this.b.x,this.b.y)[0].style.backgroundColor = "white";
+		this.getCell(this.a.x,this.a.y)[0].style.backgroundColor = "white";
 		this.a = null;
 		this.b = null;
 	}
